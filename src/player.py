@@ -11,4 +11,4 @@ class Player:
 
     def take_item(item):
         self.inventory.append(item)
-        
+        current_room.player_takes_item(item)

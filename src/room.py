@@ -14,5 +14,6 @@ class Room:
     def player_takes_item(item):
         if item is in self.items:
             self.items.remove(item)
+            print(f"{item} added to inventory.")
         elif item is not in self.items:
             print(f"There is no {item} to be found.")
