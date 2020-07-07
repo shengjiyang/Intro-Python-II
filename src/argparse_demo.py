@@ -9,8 +9,11 @@ import math
 
 description = "Calculates the volume of a cylinder"
 parser = argparse.ArgumentParser(description=description)
-parser.add_argument("radius", type=float, help="Radius of Cylinder")
-parser.add_argument("height", type=float, help="Height of Cylinder")
+
+# Adding shorcuts -r and -H obligates the user to state the
+# arguments in the command line.
+parser.add_argument("-r", "--radius", type=float, help="Radius of Cylinder")
+parser.add_argument("-H", "--height", type=float, help="Height of Cylinder")
 args = parser.parse_args()
 
 def cylinder_vol(radius, height):
