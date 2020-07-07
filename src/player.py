@@ -9,6 +9,10 @@ class Player:
         self.current_room = current_room
         self.inventory = []
 
-    def take_item(item):
+    def get_item(item):
         self.inventory.append(item)
         player.current_room.items.remove(item)
+
+    def drop_item(item):
+        self.insventory.remove(item)
+        player.current_room.items.append(item)

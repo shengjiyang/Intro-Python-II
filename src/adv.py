@@ -68,6 +68,8 @@ while True:
 
     print("\n")
 
+    # Navigation
+
     if input_ == "n":
         if "n_to" in player.current_room.__dir__():
             player.current_room = player.current_room.n_to
@@ -83,6 +85,7 @@ while True:
         elif "n_to" not in player.current_room.__dir__():
             print("There is no path in that direction, squire.")
         
+
     if input_ == "s":
         if "s_to" in player.current_room.__dir__():
             player.current_room = player.current_room.s_to
@@ -114,6 +117,7 @@ while True:
         elif "e_to" not in player.current_room.__dir__():
             print("There is no path in that direction, squire.")
 
+
     if input_ == "w":
         if "w_to" in player.current_room.__dir__():
             player.current_room = player.current_room.w_to
@@ -128,6 +132,26 @@ while True:
 
         elif "w_to" not in player.current_room.__dir__():
             print("There is no path in that direction, squire.")
-    
+
+    # Getting and dropping items.
+
+    if "get " in input_:
+        item = input_ - "get "
+        if item in player.current_room.items:
+            player.get_item(item)
+            print("You take the {item}")
+        else:
+            print("There is no {item}")
+
+    if "take " in input_:
+        item = input_ - "take "
+        if item in player.current_room.items:
+            player.get_item(item)
+            print("You take the {item}")
+        else:
+            print("There is no {item}")
+            
+    # Quitting the program
+
     if input_ == "q":
         break
