@@ -2,18 +2,10 @@
 # description attributes.
 
 class Room:
-    def __init__(self, name, description, n_to, s_to, e_to, w_to):
+    def __init__(self, name, description):
         self.name = name
         self.description = description
-        self.n_to = n_to
-        self.s_to = s_to
-        self.e_to = e_to
-        self.w_to = w_to
         self.items = []
 
-    def player_takes_item(item):
-        if item is in self.items:
-            self.items.remove(item)
-            print(f"{item} added to inventory.")
-        elif item is not in self.items:
-            print(f"There is no {item} to be found.")
+    def __str__(self):
+        return f"name : {self.name}, description : {self.description}"
