@@ -28,7 +28,6 @@ chamber! Sadly, it has already been
 completely emptied by earlier adventurers.
 The only exit is to the south."""),
 }
-
  
 # Link rooms together
 
@@ -40,10 +39,6 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
-
-#
-# Main
-#
 
 # Make a new player object that is currently in the 'outside' room.
 name = input("How shall I address thee, squire? ")
@@ -74,22 +69,65 @@ while True:
     print("\n")
 
     if input_ == "n":
-        player.current_room = player.current_room.n_to
-        print(player.current_room.name)
-        print(player.current_room.description)
+        if "n_to" in player.current_room.__dir__():
+            player.current_room = player.current_room.n_to
+            print(player.current_room.name)
+            print(player.current_room.description)
 
+            if len(player.current_room.items) > 0:
+                print("\n")
+                print("You see these items: ")
+                for item in items:
+                    print(item)
+
+        elif "n_to" not in player.current_room.__dir__():
+            print("There is no path in that direction, squire.")
+        
     if input_ == "s":
-        player.current_room = player.current_room.s_to
-        print(player.current_room.name)
-        print(player.current_room.description)
+        if "s_to" in player.current_room.__dir__():
+            player.current_room = player.current_room.s_to
+            print(player.current_room.name)
+            print(player.current_room.description)
+
+            if len(player.current_room.items) > 0:
+                print("\n")
+                print("You see these items: ")
+                for item in items:
+                    print(item)
+
+        elif "s_to" not in player.current_room.__dir__():
+            print("There is no path in that direction, squire.")
+        
 
     if input_ == "e":
-        player.current_room = player.current_room.e_to
-        print(player.current_room.name)
-        print(player.current_room.description)
+        if "e_to" in player.current_room.__dir__():
+            player.current_room = player.current_room.e_to
+            print(player.current_room.name)
+            print(player.current_room.description)
+
+            if len(player.current_room.items) > 0:
+                print("\n")
+                print("You see these items: ")
+                for item in items:
+                    print(item)
+
+        elif "e_to" not in player.current_room.__dir__():
+            print("There is no path in that direction, squire.")
 
     if input_ == "w":
-        player.current_room = player.current_room.w_to
-        print(player.current_room.name)
-        print(player.current_room.description)
+        if "w_to" in player.current_room.__dir__():
+            player.current_room = player.current_room.w_to
+            print(player.current_room.name)
+            print(player.current_room.description)
+
+            if len(player.current_room.items) > 0:
+                print("\n")
+                print("You see these items: ")
+                for item in items:
+                    print(item)
+
+        elif "w_to" not in player.current_room.__dir__():
+            print("There is no path in that direction, squire.")
     
+    if input_ == "q":
+        break
