@@ -1,5 +1,6 @@
 from player import Player
 from room import Room
+from item import Item
 
 # Declare all the rooms
 
@@ -41,10 +42,54 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
-name = input("How shall I address thee, squire? ")
-player = Player(name=name, current_room=room["outside"])
+sex = input("Art thou man or woman? ")
+name = input("How shall I address thee, adventurer? ")
 
-print("\n")
+while True:
+    
+    class_ = input("What is they profession? ")
+    
+    class_desc = f"""The world of Aecceghar is populated by
+adventurers of three main stripes,
+
+Knights:
+
+Knights are distinguished from the common skirmisher by their
+devotion to the ideals of chivalry and by the surpassing
+excellence of their armor.
+
+Rouges:
+
+Rogues are agile and stealthy thieves, with knowledge of locks,
+traps, and poisons. Their advantage lies in surprise, which they
+employ to great advantage.
+
+Wizards:
+
+Wizards start out with a knowledge of magic, a selection of
+magical items, and a particular affinity for dweomercraft.
+Although seemingly weak and easy to overcome at first sight, an
+experienced Wizard is a deadly foe.
+"""
+    if  class_ == "knight" or class_ == "rogue" or class_ == "wizard":
+        player = Player(name=name, sex=sex, class_=class_, current_room=room["outside"])
+        player.define_class()
+        
+        print("\n")
+        print(f"{name}, welcome to the magical world of Aecceghar!")
+        print("\n")
+        print(player.current_room.name)
+        print(player.current_room.description)
+        break
+        
+    elif class_ == "h" or class_ == "help":
+        print("\n")
+        print(class_desc)
+            
+    else:
+        print("Class not defined, see class descriptions below.")
+        print("\n")
+        print(class_desc)
 
 # Write a loop that:
 
@@ -56,11 +101,6 @@ print("\n")
 # Print an error message if the movement isn't allowed.
 
 # If the user enters "q", quit the game.
-
-print(f"{name}, welcome to the magical world of Aecceghar!")
-print("\n")
-print(player.current_room.name)
-print(player.current_room.description)
 
 while True:
 
@@ -83,7 +123,7 @@ while True:
                     print(item)
 
         elif "n_to" not in player.current_room.__dir__():
-            print("There is no path in that direction, squire.")
+            print("There is no path in that direction, adventurer.")
         
 
     if input_ == "s":
@@ -95,11 +135,11 @@ while True:
             if len(player.current_room.items) > 0:
                 print("\n")
                 print("You see these items: ")
-                for item in items:
+                for item in player.current_room.items:
                     print(item)
 
         elif "s_to" not in player.current_room.__dir__():
-            print("There is no path in that direction, squire.")
+            print("There is no path in that direction, adventurer.")
         
 
     if input_ == "e":
@@ -111,11 +151,11 @@ while True:
             if len(player.current_room.items) > 0:
                 print("\n")
                 print("You see these items: ")
-                for item in items:
+                for item in player.current_room.items:
                     print(item)
 
         elif "e_to" not in player.current_room.__dir__():
-            print("There is no path in that direction, squire.")
+            print("There is no path in that direction, adventurer.")
 
 
     if input_ == "w":
@@ -131,7 +171,7 @@ while True:
                     print(item)
 
         elif "w_to" not in player.current_room.__dir__():
-            print("There is no path in that direction, squire.")
+            print("There is no path in that direction, adventurer.")
 
     # Getting and dropping items.
 
@@ -139,7 +179,7 @@ while True:
         item = input_ - "get "
         if item in player.current_room.items:
             player.get_item(item)
-            print("You take the {item}")
+            item.on_take()
         else:
             print("There is no {item}")
 
@@ -147,10 +187,21 @@ while True:
         item = input_ - "take "
         if item in player.current_room.items:
             player.get_item(item)
-            print("You take the {item}")
+            item.on_take()
         else:
             print("There is no {item}")
-            
+
+    if "drop " in input_:
+        item = input_ - "drop "
+        if item in player.inventory:
+            player.drop_item(item)
+            item.on_drop()
+        else:
+            print("{item} was not found in your inventory, adventurer.")
+
+    if input_ == "i" or input_ == "inventory":
+        player.access_inventory()
+
     # Quitting the program
 
     if input_ == "q":
