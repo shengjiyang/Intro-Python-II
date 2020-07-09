@@ -1,4 +1,4 @@
-from player import Player
+from character import Player
 from room import Room
 from item import Item
 
@@ -42,6 +42,8 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
+# 
+
 sex = input("Art thou man or woman? ")
 name = input("How shall I address thee, adventurer? ")
 
@@ -85,6 +87,9 @@ experienced Wizard is a deadly foe.
     elif class_ == "h" or class_ == "help":
         print("\n")
         print(class_desc)
+
+    elif class_ == "q":
+        break
             
     else:
         print("Class not defined, see class descriptions below.")
@@ -176,28 +181,42 @@ while True:
     # Getting and dropping items.
 
     if "get " in input_:
-        item = input_ - "get "
+        item = input_.replace("get ", " ").lower()
+        print(item)
+        item = item.replace(" ", "_")
+        print(item)
         if item in player.current_room.items:
             player.get_item(item)
-            item.on_take()
+            # item.on_take()
         else:
             print("There is no {item}")
 
     if "take " in input_:
-        item = input_ - "take "
+        item = input_.replace("take ", " ").lower()
+        print(item)
+        item = item.replace(" ", "_")
+        print(item)
         if item in player.current_room.items:
             player.get_item(item)
-            item.on_take()
+            # item.on_take()
         else:
             print("There is no {item}")
 
     if "drop " in input_:
-        item = input_ - "drop "
-        if item in player.inventory:
+        item = input_.replace("drop", " ")
+        item = item.replace("  ", "")
+        print(type(item))
+        print(item)
+        print(player.inventory["name"])
+
+        boolean = player.inventory["name"] == item
+        has_item = player.inventory[boolean]
+
+        if len(has_item) > 0:
             player.drop_item(item)
-            item.on_drop()
+            # item.on_drop()
         else:
-            print("{item} was not found in your inventory, adventurer.")
+            print(f"{item} was not found in your inventory, adventurer.")
 
     if input_ == "i" or input_ == "inventory":
         player.access_inventory()
