@@ -182,26 +182,13 @@ while True:
 
     # Getting and dropping items.
 
-    if "get " in input_:
-        item = input_.replace("get ", " ").lower()
-        print(item)
-        item = item.replace(" ", "_")
-        print(item)
-        if item in player.current_room.items:
-            player.get_item(item)
-            # item.on_take()
-        else:
-            print("There is no {item}")
-
     if "take " in input_:
-        item = input_.replace("take ", " ").lower()
-        item.replace(" ", "")
+        item = input_.replace("take ", "")
 
-        if item in player.current_room.items["name"]:
-            player.get_item(item)
-            # item.on_take()
-        else:
-            print("There is no {item}")
+        boolean = player.current_room.items["name"] == item
+        
+        # else:
+        #     print("There is no {item}")
 
     if "drop " in input_:
         item = input_.replace("drop", " ")
@@ -210,7 +197,13 @@ while True:
         boolean = player.inventory["name"] == item
         has_item = player.inventory[boolean]
 
-        if len(has_item) > 0:
+        if len(has_item) == 1:
+            player.drop_item(item)
+
+            item_dict = {"item" : has_item["item"], "name" : has_item["name"]}
+            player.current_room.items = player.current_room.items.append(item_dict, ignore_index=True)
+
+        elif len(has_item) > 1:
             player.drop_item(item)
 
             item_dict = {"item" : has_item["item"][0], "name" : has_item["name"][0]}
