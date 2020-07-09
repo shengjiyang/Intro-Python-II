@@ -123,12 +123,6 @@ while True:
             print(player.current_room.name)
             print(player.current_room.description)
 
-            if len(player.current_room.items.index) > 0:
-                print("\n")
-                print("You see these items: ")
-                for item in player.current_room.items["name"]:
-                    print(item)
-
         elif "n_to" not in player.current_room.__dir__():
             print("There is no path in that direction, adventurer.")
         
@@ -138,12 +132,6 @@ while True:
             player.current_room = player.current_room.s_to
             print(player.current_room.name)
             print(player.current_room.description)
-
-            if len(player.current_room.items.index) > 0:
-                print("\n")
-                print("You see these items: ")
-                for item in player.current_room.items["name"]:
-                    print(item)
 
         elif "s_to" not in player.current_room.__dir__():
             print("There is no path in that direction, adventurer.")
@@ -155,12 +143,6 @@ while True:
             print(player.current_room.name)
             print(player.current_room.description)
 
-            if len(player.current_room.items.index) > 0:
-                print("\n")
-                print("You see these items: ")
-                for item in player.current_room.items["name"]:
-                    print(item)
-
         elif "e_to" not in player.current_room.__dir__():
             print("There is no path in that direction, adventurer.")
 
@@ -171,12 +153,6 @@ while True:
             print(player.current_room.name)
             print(player.current_room.description)
 
-            if len(player.current_room.items.index) > 0:
-                print("\n")
-                print("You see these items: ")
-                for item in player.current_room.items["name"]:
-                    print(item)
-
         elif "w_to" not in player.current_room.__dir__():
             print("There is no path in that direction, adventurer.")
 
@@ -185,7 +161,24 @@ while True:
     if "take " in input_:
         item = input_.replace("take ", "")
 
-        boolean = player.current_room.items["name"] == item
+        # The problem starts here
+        # boolean = player.current_room.items["name"] == item
+        # has_item = player.current_room.items[boolean]
+
+        print(player.current_room.items)
+        player.current_room.items[""]
+
+        # if len(has_item) == 1:
+        #     player.drop_item(item)
+
+        #     item_dict = {"item" : has_item["item"], "name" : has_item["name"]}
+        #     player.inventory = player.inventory.append(item_dict, ignore_index=True)
+
+        # elif len(has_item) > 1:
+        #     player.drop_item(item)
+
+        #     item_dict = {"item" : has_item["item"][0], "name" : has_item["name"][0]}
+        #     player.inventory = player.inventory.append(item_dict, ignore_index=True)
         
         # else:
         #     print("There is no {item}")
