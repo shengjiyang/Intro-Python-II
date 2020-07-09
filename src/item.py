@@ -14,7 +14,7 @@ class Item:
     #     print(f"You have picked up the {self.name}")
 
     # def on_drop(self):
-    #     print(f"You have dropped the {self.name}")
+    #    print(f"You have dropped the {self.name}")
 
 
 # class Weapon(Item):

@@ -12,23 +12,29 @@ class Player:
         self.current_room = current_room
         self.inventory = []
 
-
     def get_item(item):
-        self.inventory.append(item)
-        player.current_room.items.remove(item)
+        # self.inventory.append(item)
+        self.current_room.items = self.current_room.items.drop(self.current_room.items[self.current_room.items == item].index[:1])
 
     def drop_item(self, item):
-        self.inventory = self.inventory.drop(self.inventory[self.inventory["name"] == item].index[1:])
-        self.access_inventory()
-        # self.current_room.items.append(item)
+        self.inventory = self.inventory.drop(self.inventory[self.inventory["name"] == item].index[:1])
+
+        # Due to a pesky TypeError, I wound up opting for this
+        # print statement in lieu of adding an on_drop() method
+        # to the Item class.       
+        print(f"You have dropped the {item}.")
 
     def access_inventory(self):
         print("Inventory: ")
         print("---------")
         for item in self.inventory["item"]:
-            # print(f"{item.name}, {item.description}")
-            print(type(item))
-            print(item)
+            print(f"{item.name}, {item.description}")
+
+    def search(self):
+        print("You see: ")
+        print("---------")
+        for item in self.current_room.items["item"]:
+            print(f"{item.name}, {item.description}")
 
     def define_class(self):
         """
@@ -159,7 +165,6 @@ if __name__ == "__main__":
 
     def drop_item(item, inventory=inventory):
         inventory = inventory.drop(inventory[inventory["name"] == item].index)
-        print(inventory)
         # self.current_room.items.append(item)
 
     input_ = input()
@@ -173,9 +178,4 @@ if __name__ == "__main__":
 
         boolean = inventory["name"] == item
         has_item = inventory[boolean]
-
-        if len(has_item) > 0:
-            drop_item(item)
-            # item.on_drop()
-        else:
-            print(f"{item} was not found in your inventory, adventurer.")
+        print(has_item[0])

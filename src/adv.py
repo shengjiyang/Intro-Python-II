@@ -41,8 +41,9 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+
 # Make a new player object that is currently in the 'outside' room.
-# 
+
 
 sex = input("Art thou man or woman? ")
 name = input("How shall I address thee, adventurer? ")
@@ -73,6 +74,7 @@ magical items, and a particular affinity for dweomercraft.
 Although seemingly weak and easy to overcome at first sight, an
 experienced Wizard is a deadly foe.
 """
+
     if  class_ == "knight" or class_ == "rogue" or class_ == "wizard":
         player = Player(name=name, sex=sex, class_=class_, current_room=room["outside"])
         player.define_class()
@@ -121,10 +123,10 @@ while True:
             print(player.current_room.name)
             print(player.current_room.description)
 
-            if len(player.current_room.items) > 0:
+            if len(player.current_room.items.index) > 0:
                 print("\n")
                 print("You see these items: ")
-                for item in items:
+                for item in player.current_room.items["name"]:
                     print(item)
 
         elif "n_to" not in player.current_room.__dir__():
@@ -137,10 +139,10 @@ while True:
             print(player.current_room.name)
             print(player.current_room.description)
 
-            if len(player.current_room.items) > 0:
+            if len(player.current_room.items.index) > 0:
                 print("\n")
                 print("You see these items: ")
-                for item in player.current_room.items:
+                for item in player.current_room.items["name"]:
                     print(item)
 
         elif "s_to" not in player.current_room.__dir__():
@@ -153,10 +155,10 @@ while True:
             print(player.current_room.name)
             print(player.current_room.description)
 
-            if len(player.current_room.items) > 0:
+            if len(player.current_room.items.index) > 0:
                 print("\n")
                 print("You see these items: ")
-                for item in player.current_room.items:
+                for item in player.current_room.items["name"]:
                     print(item)
 
         elif "e_to" not in player.current_room.__dir__():
@@ -169,10 +171,10 @@ while True:
             print(player.current_room.name)
             print(player.current_room.description)
 
-            if len(player.current_room.items) > 0:
+            if len(player.current_room.items.index) > 0:
                 print("\n")
                 print("You see these items: ")
-                for item in items:
+                for item in player.current_room.items["name"]:
                     print(item)
 
         elif "w_to" not in player.current_room.__dir__():
@@ -193,10 +195,9 @@ while True:
 
     if "take " in input_:
         item = input_.replace("take ", " ").lower()
-        print(item)
-        item = item.replace(" ", "_")
-        print(item)
-        if item in player.current_room.items:
+        item.replace(" ", "")
+
+        if item in player.current_room.items["name"]:
             player.get_item(item)
             # item.on_take()
         else:
@@ -205,21 +206,24 @@ while True:
     if "drop " in input_:
         item = input_.replace("drop", " ")
         item = item.replace("  ", "")
-        print(type(item))
-        print(item)
-        print(player.inventory["name"])
 
         boolean = player.inventory["name"] == item
         has_item = player.inventory[boolean]
 
         if len(has_item) > 0:
             player.drop_item(item)
-            # item.on_drop()
+
+            item_dict = {"item" : has_item["item"][0], "name" : has_item["name"][0]}
+            player.current_room.items = player.current_room.items.append(item_dict, ignore_index=True)
+
         else:
             print(f"{item} was not found in your inventory, adventurer.")
 
     if input_ == "i" or input_ == "inventory":
         player.access_inventory()
+
+    if input_ == "search":
+        player.search()
 
     # Quitting the program
 
