@@ -166,10 +166,14 @@ while True:
         # has_item = player.current_room.items[boolean]
 
         print(player.current_room.items)
-        player.current_room.items[""]
+        print(player.current_room.items["name"])
+        print(player.current_room.items["name"] == "Health Potion")
 
-        # if len(has_item) == 1:
-        #     player.drop_item(item)
+        has_item = player.current_room.items[boolean]
+        print(has_item)
+
+        if len(has_item) == 1:
+            player.get_item(item)
 
         #     item_dict = {"item" : has_item["item"], "name" : has_item["name"]}
         #     player.inventory = player.inventory.append(item_dict, ignore_index=True)

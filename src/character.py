@@ -12,7 +12,7 @@ class Player:
         self.current_room = current_room
         self.inventory = []
 
-    def get_item(item):
+    def get_item(self, item):
         # self.inventory.append(item)
         self.current_room.items = self.current_room.items.drop(self.current_room.items[self.current_room.items == item].index[:1])
 
